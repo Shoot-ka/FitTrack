@@ -19,7 +19,7 @@ public sealed class MuscleGroupsController(
     public async Task<ActionResult<PagedResult<MuscleGroupDto>>> List(
         CancellationToken ct, int page = 1, int pageSize = 20)
     {
-        var error = CatalogRequestChecks.PaginationError(page, pageSize);
+        var error = RequestChecks.PaginationError(page, pageSize);
         if (error is not null)
         {
             return BadRequest(error);
@@ -35,7 +35,7 @@ public sealed class MuscleGroupsController(
         var validation = await validator.ValidateAsync(request, ct);
         if (!validation.IsValid)
         {
-            return BadRequest(CatalogRequestChecks.ValidationError(validation));
+            return BadRequest(RequestChecks.ValidationError(validation));
         }
 
         return StatusCode(StatusCodes.Status201Created, await catalog.AddMuscleGroupAsync(request, ct));

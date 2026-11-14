@@ -21,7 +21,7 @@ public sealed class ExercisesController(
         CancellationToken ct, int? muscleGroupId = null, Equipment? equipment = null,
         string? search = null, int page = 1, int pageSize = 20)
     {
-        var error = CatalogRequestChecks.PaginationError(page, pageSize);
+        var error = RequestChecks.PaginationError(page, pageSize);
         if (error is not null)
         {
             return BadRequest(error);
@@ -46,7 +46,7 @@ public sealed class ExercisesController(
         var validation = await createValidator.ValidateAsync(request, ct);
         if (!validation.IsValid)
         {
-            return BadRequest(CatalogRequestChecks.ValidationError(validation));
+            return BadRequest(RequestChecks.ValidationError(validation));
         }
 
         var exercise = await catalog.AddExerciseAsync(request, ct);
@@ -60,7 +60,7 @@ public sealed class ExercisesController(
         var validation = await updateValidator.ValidateAsync(request, ct);
         if (!validation.IsValid)
         {
-            return BadRequest(CatalogRequestChecks.ValidationError(validation));
+            return BadRequest(RequestChecks.ValidationError(validation));
         }
 
         return Ok(await catalog.UpdateExerciseAsync(id, request, ct));

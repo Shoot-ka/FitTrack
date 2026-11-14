@@ -30,7 +30,7 @@ public sealed class CatalogService(AppDbContext db, IMapper mapper) : ICatalogSe
         var name = request.Name!.Trim();
         if (await db.MuscleGroups.AnyAsync(group => group.Name == name, ct))
         {
-            throw new CatalogException(new ErrorResponse(409, "Muscle group name already exists."));
+            throw new ApiException(new ErrorResponse(409, "Muscle group name already exists."));
         }
 
         var group = new MuscleGroup { Name = name };
@@ -114,7 +114,7 @@ public sealed class CatalogService(AppDbContext db, IMapper mapper) : ICatalogSe
         await db.Exercises.Include(exercise => exercise.ExerciseMuscleGroups)
             .ThenInclude(link => link.MuscleGroup)
             .SingleOrDefaultAsync(exercise => exercise.Id == id, ct)
-        ?? throw new CatalogException(new ErrorResponse(404, "Exercise was not found."));
+        ?? throw new ApiException(new ErrorResponse(404, "Exercise was not found."));
 
     private async Task SetExerciseDetailsAsync(Exercise exercise, string name, string? description,
         Equipment equipment, List<int> groupIds, CancellationToken ct)
@@ -122,13 +122,13 @@ public sealed class CatalogService(AppDbContext db, IMapper mapper) : ICatalogSe
         name = name.Trim();
         if (await db.Exercises.AnyAsync(item => item.Name == name && item.Id != exercise.Id, ct))
         {
-            throw new CatalogException(new ErrorResponse(409, "Exercise name already exists."));
+            throw new ApiException(new ErrorResponse(409, "Exercise name already exists."));
         }
 
         var groups = await db.MuscleGroups.Where(group => groupIds.Contains(group.Id)).ToListAsync(ct);
         if (groups.Count != groupIds.Count)
         {
-            throw new CatalogException(new ErrorResponse(400, "Validation failed",
+            throw new ApiException(new ErrorResponse(400, "Validation failed",
                 new Dictionary<string, string[]> { ["muscleGroupIds"] = ["All muscle groups must exist."] }));
         }
 
@@ -164,10 +164,10 @@ public sealed class CatalogService(AppDbContext db, IMapper mapper) : ICatalogSe
         catch (DbUpdateException exception)
             when (exception.InnerException is SqlException { Number: 2601 or 2627 })
         {
-            throw new CatalogException(new ErrorResponse(409, $"{resource} name already exists."));
+            throw new ApiException(new ErrorResponse(409, $"{resource} name already exists."));
         }
     }
 
-    private static CatalogException ExerciseInUse() =>
+    private static ApiException ExerciseInUse() =>
         new(new ErrorResponse(400, "An exercise used in a workout set cannot be deleted."));
 }

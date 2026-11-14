@@ -4,7 +4,7 @@ using FluentValidation.Results;
 
 namespace FitTrack.Controllers;
 
-internal static class CatalogRequestChecks
+internal static class RequestChecks
 {
     public static ErrorResponse? PaginationError(int page, int pageSize) =>
         page < 1 || pageSize < 1 || (long)(page - 1) * pageSize > int.MaxValue

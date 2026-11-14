@@ -22,7 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add<CatalogExceptionFilter>();
+    options.Filters.Add<ApiExceptionFilter>();
     options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
 })
     .ConfigureApiBehaviorOptions(options =>
@@ -43,6 +43,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>()
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IBodyMetricsService, BodyMetricsService>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
+builder.Services.AddScoped<IWorkoutService, WorkoutService>();
 builder.Services.AddAutoMapper(options => options.LicenseKey = builder.Configuration["AutoMapper:LicenseKey"], typeof(BodyMetricsProfile));
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
