@@ -13,7 +13,7 @@
     <section id="login" class="login">
       <div class="intro"><h1>Your training,<br> in view.</h1><p>See your workouts, weekly training volume, and saved body metrics in one place.</p></div>
       <form id="login-form" class="card">
-        <h2>Member sign in</h2>
+        <h2>Sign in to FitTrack</h2>
         <label for="email">Email address</label>
         <input id="email" name="email" type="email" autocomplete="username" required>
         <label for="password">Password</label>
@@ -29,7 +29,84 @@
         <article class="card"><h2>Weekly training volume</h2><p class="muted">Reps × weight in kg · Last four weeks</p><div id="weeks" class="chart"></div></article>
         <article class="card"><h2>Body metrics</h2><div id="metrics"></div></article>
       </div>
-      <article class="card workouts"><h2>Recent workouts</h2><div id="workouts"></div></article>
+      <div class="grid editors">
+        <article class="card">
+          <h2>Save body metrics</h2>
+          <form id="metrics-form">
+            <div class="fields">
+              <div><label for="height">Height (cm)</label><input id="height" name="height" type="number" min="100" max="250" step="0.01" required></div>
+              <div><label for="weight">Weight (kg)</label><input id="weight" name="weight" type="number" min="30" max="300" step="0.01" required></div>
+            </div>
+            <label for="goal">Fitness goal</label>
+            <select id="goal" name="goal" required><option value="">Choose a goal</option><option value="0">Lose weight</option><option value="1">Gain muscle</option><option value="2">Maintain</option></select>
+            <p id="metrics-message" role="status" hidden></p>
+            <button type="submit">Save metrics</button>
+          </form>
+        </article>
+        <article class="card">
+          <h2 id="workout-heading">Log a workout</h2>
+          <form id="workout-form">
+            <label for="workout-title">Workout title</label>
+            <input id="workout-title" name="title" minlength="2" maxlength="80" required>
+            <div class="fields">
+              <div><label for="workout-date">Date and time</label><input id="workout-date" name="date" type="datetime-local" step="1" required></div>
+              <div><label for="duration">Duration (min)</label><input id="duration" name="duration" type="number" min="1" max="600" required></div>
+            </div>
+            <label for="notes">Notes (optional)</label>
+            <textarea id="notes" name="notes" maxlength="1000" rows="2"></textarea>
+            <div id="set-rows"></div>
+            <div class="actions">
+              <button type="button" id="add-set" class="secondary" disabled>Add set</button>
+              <button type="submit" id="save-workout" disabled>Save workout</button><button type="button" id="cancel-workout" class="secondary" hidden>Cancel edit</button>
+            </div>
+            <p id="workout-message" role="status" hidden></p>
+          </form>
+        </article>
+      </div>
+      <article class="card workouts">
+        <h2>Workout history</h2><p id="history-message" role="status" hidden></p><div id="workouts"></div>
+        <div class="actions history-nav"><button id="history-prev" class="secondary" disabled>Previous</button><span id="history-page"></span><button id="history-next" class="secondary" disabled>Next</button></div>
+      </article>
+      <article class="card workouts">
+        <h2>Exercise progress</h2><p class="muted">Highest weight lifted on each workout date.</p>
+        <label for="progress-exercise">Exercise</label><select id="progress-exercise"><option value="">Choose an exercise</option></select>
+        <p id="progress-message" role="status" hidden></p><div id="progress-chart" class="chart"></div>
+      </article>
+    </section>
+    <section id="trainer-dashboard" hidden>
+      <div class="heading"><div><h1>Trainer workspace</h1><p id="trainer-account" class="muted"></p></div><button id="trainer-refresh" class="secondary">Refresh data</button></div>
+      <p id="trainer-message" role="status" hidden></p>
+      <div class="grid editors">
+        <article class="card">
+          <h2>Muscle groups</h2>
+          <form id="group-form">
+            <label for="group-name">New group name</label><input id="group-name" name="name" maxlength="80" required>
+            <button type="submit">Add muscle group</button><p id="group-message" role="status" hidden></p>
+          </form>
+        </article>
+        <article class="card">
+          <h2 id="exercise-heading">Add exercise</h2>
+          <form id="exercise-form">
+            <label for="exercise-name">Exercise name</label><input id="exercise-name" name="name" minlength="2" maxlength="80" required>
+            <label for="description">Description (optional)</label><textarea id="description" name="description" maxlength="500" rows="2"></textarea>
+            <label for="equipment">Equipment</label>
+            <select id="equipment" name="equipment"><option value="0">None</option><option value="1">Barbell</option><option value="2">Dumbbell</option><option value="3">Machine</option><option value="4">Bodyweight</option></select>
+            <fieldset class="group-field"><legend>Muscle groups</legend><div id="group-options"></div></fieldset>
+            <div class="actions"><button type="submit">Save exercise</button><button id="cancel-exercise" type="button" class="secondary" hidden>Cancel edit</button></div>
+            <p id="exercise-message" role="status" hidden></p>
+          </form>
+        </article>
+        <article class="card"><h2>Exercise catalog</h2><div id="trainer-exercises"></div></article>
+        <article class="card">
+          <h2>Clients</h2>
+          <form id="client-form">
+            <label for="client-email">Member email</label><input id="client-email" name="email" type="email" required>
+            <button type="submit">Add client</button><p id="client-message" role="status" hidden></p>
+          </form>
+          <label for="client-picker">View client workouts</label><select id="client-picker"></select>
+          <p id="client-workout-message" role="status" hidden></p><div id="client-workouts"></div>
+        </article>
+      </div>
     </section>
   </main>
 </body>

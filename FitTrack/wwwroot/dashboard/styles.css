@@ -41,3 +41,25 @@ dt { color: var(--muted); } dd { margin: 0; text-align: right; }
 .workout p { margin: 5px 0; }
 @media (max-width: 670px) { .login, .grid { grid-template-columns: 1fr; } }
 
+
+.editors { margin-top: 16px; grid-template-columns: 1fr 1.4fr; align-items: start; }
+.fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+select, textarea { width: 100%; min-width: 0; background: #121612; border: 1px solid #566152; border-radius: 8px; padding: 12px; color: inherit; font: inherit; }
+select:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+textarea { resize: vertical; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.actions button, .set-row button { width: auto; margin: 0; }
+.set-row { min-width: 0; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 10px; border: 1px solid var(--line); border-radius: 8px; margin: 16px 0 0; }
+.set-row label { margin: 0; }
+.set-row input, .set-row select { display: block; margin-top: 6px; }
+.set-row legend { color: var(--muted); padding-inline: 5px; }
+@media (max-width: 780px) { .editors { grid-template-columns: 1fr; } }
+@media (max-width: 430px) { .fields, .set-row { grid-template-columns: 1fr; } }
+
+
+.history-nav { align-items: center; }
+.group-field { margin: 16px 0 0; min-width: 0; border: 1px solid var(--line); border-radius: 8px; }
+#group-options { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+#group-options label { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+#group-options input { width: auto; accent-color: var(--accent); }
+#client-picker, #progress-exercise { max-width: 440px; }
