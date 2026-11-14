@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FitTrack | Member dashboard</title>
+  <link rel="stylesheet" href="/dashboard/styles.css">
+  <script src="/dashboard/app.js" defer></script>
+</head>
+<body>
+  <header><div class="shell top"><a class="brand" href="/dashboard/"><span class="mark" aria-hidden="true">↗</span> FitTrack</a><button id="logout" class="secondary" hidden>Sign out</button></div></header>
+  <main class="shell">
+    <section id="login" class="login">
+      <div class="intro"><h1>Your training,<br> in view.</h1><p>See your workouts, weekly training volume, and saved body metrics in one place.</p></div>
+      <form id="login-form" class="card">
+        <h2>Member sign in</h2>
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" autocomplete="username" required>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <p id="login-error" class="error" role="alert" hidden></p>
+        <button type="submit">Sign in</button>
+      </form>
+    </section>
+    <section id="dashboard" hidden>
+      <div class="heading"><div><h1>Training overview</h1><p id="account"></p></div><button id="refresh" class="secondary">Refresh data</button></div>
+      <p id="status" role="status" hidden></p>
+      <div class="grid">
+        <article class="card"><h2>Weekly training volume</h2><p class="muted">Reps × weight in kg · Last four weeks</p><div id="weeks" class="chart"></div></article>
+        <article class="card"><h2>Body metrics</h2><div id="metrics"></div></article>
+      </div>
+      <article class="card workouts"><h2>Recent workouts</h2><div id="workouts"></div></article>
+    </section>
+  </main>
+</body>
+</html>
