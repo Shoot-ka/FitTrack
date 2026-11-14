@@ -2,6 +2,7 @@ using System.Text;
 using FitTrack.Data;
 using FitTrack.Data.Seed;
 using FitTrack.DTOs.Common;
+using FitTrack.Mapping;
 using FitTrack.Model;
 using FitTrack.Services;
 using FitTrack.Services.Interfaces;
@@ -36,6 +37,8 @@ builder.Services.AddControllers(options =>
     });
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IBodyMetricsService, BodyMetricsService>();
+builder.Services.AddAutoMapper(options => options.LicenseKey = builder.Configuration["AutoMapper:LicenseKey"], typeof(BodyMetricsProfile));
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var jwt = builder.Configuration.GetSection("Jwt");

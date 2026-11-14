@@ -1,10 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
 namespace FitTrack.Model;
 
-[Table("ExerciseMuscleGroup")]
-[PrimaryKey(nameof(ExerciseId), nameof(MuscleGroupId))]
 public sealed class ExerciseMuscleGroup
 {
     public int ExerciseId { get; set; }
