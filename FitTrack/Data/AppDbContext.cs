@@ -28,4 +28,9 @@ public sealed class AppDbContext(
 
         optionsBuilder.UseSqlServer(connectionString);
     }
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        FitTrackModelConfiguration.Configure(modelBuilder);
+    }
 }
