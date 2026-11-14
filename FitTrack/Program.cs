@@ -1,4 +1,5 @@
 using System.Text;
+using FitTrack.Controllers;
 using FitTrack.Data;
 using FitTrack.Data.Seed;
 using FitTrack.DTOs.Common;
@@ -20,7 +21,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddControllers(options =>
-    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true)
+{
+    options.Filters.Add<CatalogExceptionFilter>();
+    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+})
     .ConfigureApiBehaviorOptions(options =>
     {
         options.InvalidModelStateResponseFactory = context =>
@@ -38,6 +42,7 @@ builder.Services.AddControllers(options =>
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IBodyMetricsService, BodyMetricsService>();
+builder.Services.AddScoped<ICatalogService, CatalogService>();
 builder.Services.AddAutoMapper(options => options.LicenseKey = builder.Configuration["AutoMapper:LicenseKey"], typeof(BodyMetricsProfile));
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
